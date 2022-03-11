@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>API测试</title>
+    </head>
+    <style type="text/css">
+
+    </style>
+    <body>
+        <div id="app">
+            <div>
+                {{config}}
+            </div>
+        </div>
+    </body>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script type="text/javascript" src="mictoken.js"></script>
+
+    <script>
+        const vm = Vue.createApp({
+        data(){
+            return{
+                config:{params:'尚未初始化'}
+            };
+        }
+        }).mount('#app');
+
+        getconfig(vm);
+        
+        function getconfig(avm){
+            const sql = "select(*).from(sys_unit).where(id<10).as(json)";
+            const tstamp = new Date().getTime();
+            axios({
+                method:'get',
+                baseURL:'http://127.0.0.1:8080/',
+                url:'api/script/sql',
+                params:{
+                    micsql:sql
+                    ,user:'admin'
+                    ,tstamp:tstamp
+                    ,token:getMicToken({micsql:sql,user:'admin',tstamp:tstamp},'df5cbcafc6a12759c6ac17e9f93e83516F7B')
+                }
+            }).then(function(response){
+                const msg = response.data;
+                console.log(msg);
+                if (response.status==200){
+                    avm.config = msg;
+                }
+            });
+        };
+    </script>
+</html>

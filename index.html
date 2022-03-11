@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>计算Token方法测试</title>
+		<style>
+			.inputbox{
+				width: 500px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<form>
+				<table border="0">
+					<tr>
+						<td>用户名:</td>
+						<td>
+							<input class="inputbox" type="text" name="username" v-model="user.user">
+						</td>
+					</tr>
+					<tr>
+						<td>访问密钥:</td>
+						<td>
+							<input class="inputbox" type="text" name="password" v-model="accesskey">
+						</td>
+					</tr>
+					<tr>
+						<td>变量名:</td>
+						<td>
+							<input class="inputbox" type="text" name="tagname" v-model="user.tagname">
+						</td>
+					</tr>
+					<tr>
+						<td>开始时间:</td>
+						<td>
+							<input class="inputbox" type="text" name="email" v-model="user.begintime">
+						</td>
+					</tr>
+					<tr>
+						<td>结束时间:</td>
+						<td>
+							<input class="inputbox" type="text" name="pwdQuestion" v-model="user.endtime">
+						</td>
+					</tr>
+					<tr>
+						<td>当前时间戳:</td>
+						<td>
+							<input class="inputbox" type="text" name="tstamp" v-model="user.tstamp">
+						</td>
+					</tr>
+					<tr>
+						<td>Token:</td>
+						<td>
+							<input class="inputbox" type="text" name="token" v-model="token" disabled>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="submit" value="计算Token" @click.prevent="register">
+						</td>
+						<td>
+							<input type="reset" value="重填">
+						</td>
+					</tr>
+				</table>
+			</form>
+			<a href="test.html">另一个测试页面</a>
+		</div>
+		<script type="text/javascript" src="https://unpkg.com/vue@next"></script>
+		<script type="text/javascript" src="mictoken.js"></script>
+		<script>
+			const App={
+				data(){
+					return{
+						user:{
+							tagname:'Micbox3-m2jy.x1_asl_asl-xc1_MF2_SHTJ4_YY2-011_meas-value:1',
+							begintime:'2021-08-05 11:55:44',
+							endtime:'2021-08-06 11:55:52',
+							tstamp:1628222178160,
+							user:'admin'
+						},
+						accesskey:'9c6f66798aac1c040f143c31e1eb44cc47E6',
+						token:''
+					}
+				},
+				methods:{
+					register:function(){
+						this.token = getMicToken(this.user,this.accesskey);
+					}
+				}
+			};
+			const app= Vue.createApp(App);
+			vm = app.mount('#app');
+		</script>
+	</body>
+
+</html>
